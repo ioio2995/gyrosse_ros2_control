@@ -1,0 +1,65 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 50 # Hz
+    use_sim_time: true
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    gyrosse_base_controller:
+      type: diff_drive_controller/DiffDriveController
+
+gyrosse_controller:
+  ros__parameters:
+    # Model
+    traction_joint_name: traction_joint # Name of traction joint in URDF
+    steering_joint_name: steering_joint # Name of steering joint in URDF
+
+    left_wheel_names: ["left_wheel"]
+    right_wheel_names: ["right_wheel"]
+
+    wheel_radius: 0.25 # Radius of front wheel
+    wheel_separation: 0.47
+
+    wheel_separation_multiplier: 1.0
+    left_wheel_radius_multiplier: 1.0
+    right_wheel_radius_multiplier: 1.0
+
+    # Odometry
+    publish_rate: 100.0
+    odom_frame_id: odom
+    base_frame_id: base_link
+    open_loop: false # if True, uses cmd_vel instead of hardware interface feedback to compute odometry
+    enable_odom_tf: true # If True, publishes odom<-base_link TF
+    odom_only_twist: false # If True, publishes on /odom only linear.x and angular.z; Useful for computing odometry in another node, e.g robot_localization's ekf
+    pose_covariance_diagonal: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0] # Need to be set if fusing odom with other localization source
+    twist_covariance_diagonal: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0] # Need to be set if fusing odom with other localization source
+    # velocity_rolling_window_size: 10 # Rolling window size of rcppmath::RollingMeanAccumulator applied on linear and angular speeds published on odom
+
+    # cmd_vel input
+    cmd_vel_timeout: 500 # In milliseconds. Timeout to stop if no cmd_vel is received
+    use_stamped_vel: false # Set to True if using TwistStamped.
+
+     # Velocity and acceleration limits
+    # Whenever a min_* is unspecified, default to -max_*
+    linear.x.has_velocity_limits: true
+    linear.x.has_acceleration_limits: true
+    linear.x.has_jerk_limits: false
+    linear.x.max_velocity: 1.0
+    linear.x.min_velocity: -1.0
+    linear.x.max_acceleration: 1.0
+    linear.x.max_jerk: 0.0
+    linear.x.min_jerk: 0.0
+
+    angular.z.has_velocity_limits: true
+    angular.z.has_acceleration_limits: true
+    angular.z.has_jerk_limits: false
+    angular.z.max_velocity: 1.0
+    angular.z.min_velocity: -1.0
+    angular.z.max_acceleration: 1.0
+    angular.z.min_acceleration: -1.0
+    angular.z.max_jerk: 0.0
+    angular.z.min_jerk: 0.0
+
+    # Debug
+    publish_ackermann_command: true # Publishes AckermannDrive. The speed does not comply to the msg definition, it the wheel angular speed in rad/s.
