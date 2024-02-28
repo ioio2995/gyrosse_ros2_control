@@ -1,0 +1,7 @@
+[submodule "myactuator_ros2_control"]
+	path = myactuator_ros2_control
+	url = https://github.com/ioio2995/myactuator_ros2_control.git
+	branch = master
+[submodule "myactuator_rmd"]
+	path = myactuator_rmd
+	url = https://github.com/2b-t/myactuator_rmd.git
