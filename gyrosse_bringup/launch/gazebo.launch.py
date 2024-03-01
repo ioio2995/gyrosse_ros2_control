@@ -10,9 +10,9 @@ from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
-    share_dir = get_package_share_directory('URDF_Gyrosse_description')
+    share_dir = get_package_share_directory('gyrosse_description')
 
-    xacro_file = os.path.join(share_dir, 'urdf', 'URDF_Gyrosse.xacro')
+    xacro_file = os.path.join(share_dir, 'urdf', 'gyrosse_description.xacro')
     robot_description_config = xacro.process_file(xacro_file)
     robot_urdf = robot_description_config.toxml()
 
@@ -54,11 +54,11 @@ def generate_launch_description():
         ])
     )
 
-    urdf_spawn_node = Node(
+    spawn_node = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
         arguments=[
-            '-entity', 'URDF_Gyrosse',
+            '-entity', 'gyrosse',
             '-topic', 'robot_description'
         ],
         output='screen'
@@ -69,5 +69,5 @@ def generate_launch_description():
         joint_state_publisher_node,
         gazebo_server,
         gazebo_client,
-        urdf_spawn_node,
+        spawn_node,
     ])

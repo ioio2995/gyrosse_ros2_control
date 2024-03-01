@@ -12,9 +12,6 @@ controller_manager:
 gyrosse_controller:
   ros__parameters:
     # Model
-    traction_joint_name: traction_joint # Name of traction joint in URDF
-    steering_joint_name: steering_joint # Name of steering joint in URDF
-
     left_wheel_names: ["left_wheel"]
     right_wheel_names: ["right_wheel"]
 
@@ -62,4 +59,4 @@ gyrosse_controller:
     angular.z.min_jerk: 0.0
 
     # Debug
-    publish_ackermann_command: true # Publishes AckermannDrive. The speed does not comply to the msg definition, it the wheel angular speed in rad/s.
+    #publish_ackermann_command: true # Publishes AckermannDrive. The speed does not comply to the msg definition, it the wheel angular speed in rad/s.

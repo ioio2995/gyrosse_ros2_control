@@ -18,14 +18,14 @@
   <visual>
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find URDF_Gyrosse_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find gyrosse_description)/meshes/chassis.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="silver"/>
   </visual>
   <collision>
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find URDF_Gyrosse_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find gyrosse_description)/meshes/chassis.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -46,14 +46,14 @@
   <visual>
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find URDF_Gyrosse_description)/meshes/right_wheel.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find gyrosse_description)/meshes/right_wheel.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="Black"/>
   </visual>
   <collision>
     <origin xyz="0 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find URDF_Gyrosse_description)/meshes/right_wheel.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find gyrosse_description)/meshes/right_wheel.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -75,14 +75,14 @@
   <visual>
     <origin xyz="-0.108 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find URDF_Gyrosse_description)/meshes/right_flywheel.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find gyrosse_description)/meshes/right_flywheel.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="Grey"/>
   </visual>
   <collision>
     <origin xyz="-0.108 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find URDF_Gyrosse_description)/meshes/right_flywheel.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find gyrosse_description)/meshes/right_flywheel.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -104,14 +104,14 @@
   <visual>
     <origin xyz="-0.381 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find URDF_Gyrosse_description)/meshes/left_wheel.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find gyrosse_description)/meshes/left_wheel.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="Black"/>
   </visual>
   <collision>
     <origin xyz="-0.381 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find URDF_Gyrosse_description)/meshes/left_wheel.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find gyrosse_description)/meshes/left_wheel.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
@@ -133,14 +133,14 @@
   <visual>
     <origin xyz="-0.273 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find URDF_Gyrosse_description)/meshes/left_flywheel.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find gyrosse_description)/meshes/left_flywheel.stl" scale="0.001 0.001 0.001"/>
     </geometry>
     <material name="Grey"/>
   </visual>
   <collision>
     <origin xyz="-0.273 0 0" rpy="0 0 0"/>
     <geometry>
-      <mesh filename="file://$(find URDF_Gyrosse_description)/meshes/left_flywheel.stl" scale="0.001 0.001 0.001"/>
+      <mesh filename="file://$(find gyrosse_description)/meshes/left_flywheel.stl" scale="0.001 0.001 0.001"/>
     </geometry>
   </collision>
 </link>
