@@ -6,10 +6,8 @@
 <xacro:include filename="$(find gyrosse_description)/urdf/ros2_control.xacro" />
 
 
- <link name="base_link" />
-
 <!-- Chassis -->
-<link name="chassis">
+<link name="base_link">
   <inertial>
     <origin xyz="0.19050000000000009 -0.007676917492127958 -0.0014829191458506099" rpy="0 0 0"/>
     <mass value="13.254937098226266"/>
@@ -29,12 +27,6 @@
     </geometry>
   </collision>
 </link>
-
-<joint name="chassis_joint" type="fixed">
-  <origin xyz="0 0 0" rpy="0 0 0" />
-  <parent link="base_link" />
-  <child link="chassis" />
-</joint>
 
 <!-- right wheel Link -->
 <link name="right_wheel">
@@ -60,7 +52,7 @@
 
 <joint name="right_wheel_joint" type="continuous">
   <origin xyz="0 0 0" rpy="0 0 0"/>
-  <parent link="chassis"/>
+  <parent link="base_link"/>
   <child link="right_wheel"/>
   <axis xyz="0 0 0"/>
 </joint>
@@ -89,7 +81,7 @@
 
 <joint name="right_flywheel_joint" type="continuous">
   <origin xyz="0.108 0 0" rpy="0 0 0"/>
-  <parent link="chassis"/>
+  <parent link="base_link"/>
   <child link="right_flywheel"/>
   <axis xyz="1 0 0"/>
 </joint>
@@ -147,7 +139,7 @@
 
 <joint name="left_flywheel_joint" type="continuous">
   <origin xyz="0.273 0 0" rpy="0 0 0"/>
-  <parent link="chassis"/>
+  <parent link="base_link"/>
   <child link="left_flywheel"/>
   <axis xyz="-1 0 0"/>
 </joint>

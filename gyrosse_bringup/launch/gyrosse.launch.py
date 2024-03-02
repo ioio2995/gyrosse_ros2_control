@@ -41,13 +41,13 @@ def generate_launch_description():
 
     rviz_config_file = PathJoinSubstitution(
         [
-            FindPackageShare("gyrosse_demo_description"), "rviz", "gyrosse.rviz"
+            FindPackageShare("gyrosse_description"), "rviz", "gyrosse.rviz"
         ]
     )
 
     teleop_twist_joy_config_file = PathJoinSubstitution(
         [
-            FindPackageShare("gyrosse_demo_bringup"), "config", "ps4.config.yaml",
+            FindPackageShare("gyrosse_bringup"), "config", "ps4.config.yaml",
         ]
     )
 
