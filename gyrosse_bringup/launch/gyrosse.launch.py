@@ -1,60 +1,43 @@
-# Copyright 2023 Robert Gruberski (Viola Robotics Sp. z o.o. Poland)
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+import os
+
+from ament_index_python.packages import get_package_share_directory
+
 
 from launch import LaunchDescription
+from launch.actions import ExecuteProcess, IncludeLaunchDescription, RegisterEventHandler
+from launch.event_handlers import OnProcessExit
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+
 from launch_ros.actions import Node
-from launch.substitutions import Command, FindExecutable, PathJoinSubstitution
-from launch_ros.substitutions import FindPackageShare
+
+import xacro
+
 
 def generate_launch_description():
+    gazebo = IncludeLaunchDescription(
+                PythonLaunchDescriptionSource([os.path.join(
+                    get_package_share_directory('gazebo_ros'), 'launch'), '/gazebo.launch.py']),
+             )
+    
+    gyrosse_bringup_path = os.path.join(
+        get_package_share_directory('gyrosse_bringup'))
 
-    robot_description_content = Command(
-        [
-            PathJoinSubstitution([FindExecutable(name="xacro")]),
-            " ",
-            PathJoinSubstitution(
-                [
-                    FindPackageShare("gyrosse_description"), "urdf", "gyrosse_description.xacro"
-                ]
-            ),
-        ]
-    )
+    gyrosse_description_path = os.path.join(
+        get_package_share_directory('gyrosse_description'))
+
+    robot_description_content = os.path.join(gyrosse_description_path,
+                              'urdf',
+                              'gyrosse_description.xacro')
+    
 
     robot_description = {"robot_description": robot_description_content}
-
-    robot_controllers = PathJoinSubstitution(
-        [
-            FindPackageShare("gyrosse_bringup"), "config", "gyrosse_controllers.yaml",
-        ]
-    )
-
-    rviz_config_file = PathJoinSubstitution(
-        [
-            FindPackageShare("gyrosse_description"), "rviz", "gyrosse.rviz"
-        ]
-    )
-
-    teleop_twist_joy_config_file = PathJoinSubstitution(
-        [
-            FindPackageShare("gyrosse_bringup"), "config", "ps4.config.yaml",
-        ]
-    )
 
     control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
-        parameters=[robot_description, robot_controllers],
+        parameters=[
+            robot_description, 
+            os.path.join(gyrosse_bringup_path, 'config/gyrosse_controllers.yaml')],
         output="both",
     )
 
@@ -78,10 +61,13 @@ def generate_launch_description():
     )
 
     rviz_node = Node(
-        package="rviz2",
-        executable="rviz2",
-        name="rviz2",
-        arguments=["-d", rviz_config_file],
+        package='rviz2',
+        executable='rviz2',
+        arguments=[
+            '-d',
+            os.path.join(gyrosse_description_path, 'config/config.rviz'),
+        ],
+        output='screen',
     )
 
     joy_node = Node(
@@ -96,7 +82,7 @@ def generate_launch_description():
         package='teleop_twist_joy',
         executable='teleop_node',
         name='teleop_twist_joy_node',
-        parameters=[teleop_twist_joy_config_file],
+        parameters=[os.path.join(gyrosse_bringup_path, 'config/ps4.config.yaml')],
         remappings=[
             ('/cmd_vel', '/gyrosse_base_controller/cmd_vel_unstamped'),
         ]
@@ -107,6 +93,7 @@ def generate_launch_description():
         robot_state_pub_node,
         joint_state_broadcaster_spawner,
         robot_controller_spawner,
+        gazebo,
         rviz_node,
         joy_node,
         teleop_twist_joy_node,
