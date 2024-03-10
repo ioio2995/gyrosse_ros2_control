@@ -6,7 +6,7 @@
     </hardware>
 
     <joint name="joint_flywheel_right">
-          <param name="ifname">"can0"</param>
+          <param name="ifname">can0</param>
           <param name="can_id">1</param>
           <param name="timeout">0.1</param>
           <param name="position_acceleration">200000</param>
@@ -22,7 +22,7 @@
     </joint>
 
     <joint name="joint_flywheel_left">
-          <param name="ifname">"can0"</param>
+          <param name="ifname">can0</param>
           <param name="can_id">2</param>
           <param name="timeout">0.1</param>
           <param name="position_acceleration">200000</param>
@@ -37,8 +37,8 @@
           <param name="ki_position">0</param>
     </joint>
 
-    <joint name="joint_wheel_right">
-          <param name="ifname">"can0"</param>
+<joint name="joint_wheel_right">
+          <param name="ifname">can0</param>
           <param name="can_id">3</param>
           <param name="timeout">0.1</param>
           <param name="position_acceleration">200000</param>
@@ -55,7 +55,7 @@
     </joint>
 
     <joint name="joint_wheel_left">
-          <param name="ifname">"can0"</param>
+          <param name="ifname">can0</param>
           <param name="can_id">4</param>
           <param name="timeout">0.1</param>
           <param name="position_acceleration">200000</param>
