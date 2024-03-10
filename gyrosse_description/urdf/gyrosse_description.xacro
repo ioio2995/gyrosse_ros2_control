@@ -1,147 +1,31 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" ?> 
 <robot name="gyrosse" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<xacro:include filename="$(find gyrosse_description)/urdf/materials.xacro" />
-<xacro:include filename="$(find gyrosse_description)/urdf/gazebo.xacro" />
-<xacro:include filename="$(find gyrosse_description)/urdf/ros2_control.xacro" />
+<xacro:property name="package_name" value="gyrosse_description"/>
 
+<xacro:include filename="$(find ${package_name})/urdf/include/common_macros.xacro" />
+<xacro:include filename="$(find ${package_name})/urdf/include/materials.xacro" />
+<xacro:include filename="$(find ${package_name})/urdf/gazebo.xacro" />
+<xacro:include filename="$(find ${package_name})/urdf/ros2_control.xacro" />
 
-<!-- Chassis -->
-<link name="base_link">
-  <inertial>
-    <origin xyz="0.19050000000000009 -0.007676917492127958 -0.0014829191458506099" rpy="0 0 0"/>
-    <mass value="13.254937098226266"/>
-    <inertia ixx="0.132414" iyy="0.271154" izz="0.221585" ixy="0" iyz="0.000151" ixz="0"/>
-  </inertial>
-  <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find gyrosse_description)/meshes/chassis.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="silver"/>
-  </visual>
-  <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find gyrosse_description)/meshes/chassis.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
+<xacro:chassis name="base_link"/>
 
-<!-- right wheel Link -->
-<link name="right_wheel">
-  <inertial>
-    <origin xyz="-0.049489111284257994 -1.3199520432358287e-15 2.061614684425312e-16" rpy="0 0 0"/>
-    <mass value="1.2625898797377435"/>
-    <inertia ixx="0.041938" iyy="0.021235" izz="0.021235" ixy="0" iyz="0" ixz="0"/>
-  </inertial>
-  <visual>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find gyrosse_description)/meshes/right_wheel.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="Black"/>
-  </visual>
-  <collision>
-    <origin xyz="0 0 0" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find gyrosse_description)/meshes/right_wheel.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
+<xacro:motor_wheel name="motor_wheel_right" 
+                   joint_origin_xyz="-0.145 0.06 0.04" joint_rpy="0 0 0"/>
 
-<joint name="right_wheel_joint" type="continuous">
-  <origin xyz="0 0 0" rpy="0 0 0"/>
-  <parent link="base_link"/>
-  <child link="right_wheel"/>
-  <axis xyz="0 0 0"/>
-</joint>
+<xacro:motor_wheel name="motor_wheel_left" 
+                   joint_origin_xyz="0.145 0.06 -0.04" joint_rpy="0 ${pi} 0"/>
 
-<!-- right flywheel Link -->
-<link name="right_flywheel">
-  <inertial>
-    <origin xyz="-0.008066340570656319 1.271316816228521e-16 1.7394980092897013e-16" rpy="0 0 0"/>
-    <mass value="1.7384117767470415"/>
-    <inertia ixx="0.018431" iyy="0.009354" izz="0.009354" ixy="0" iyz="0" ixz="0"/>
-  </inertial>
-  <visual>
-    <origin xyz="-0.108 0 0" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find gyrosse_description)/meshes/right_flywheel.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="Grey"/>
-  </visual>
-  <collision>
-    <origin xyz="-0.108 0 0" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find gyrosse_description)/meshes/right_flywheel.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
+<xacro:motor_flywheel name="motor_flywheel_right"
+                      joint_origin_xyz="-0.125 0.06 0.04" joint_rpy="0 0 0"/>
 
-<joint name="right_flywheel_joint" type="continuous">
-  <origin xyz="0.108 0 0" rpy="0 0 0"/>
-  <parent link="base_link"/>
-  <child link="right_flywheel"/>
-  <axis xyz="1 0 0"/>
-</joint>
+<xacro:motor_flywheel name="motor_flywheel_left" 
+                      joint_origin_xyz="0.125 0.06 -0.04" joint_rpy="0 ${pi} 0"/>
 
-  <!-- left wheel Link -->
-<link name="left_wheel">
-  <inertial>
-    <origin xyz="0.04948911128425798 -8.531713599697203e-16 -2.7715603505479613e-16" rpy="0 0 0"/>
-    <mass value="1.2625898797377435"/>
-    <inertia ixx="0.041938" iyy="0.021235" izz="0.021235" ixy="0" iyz="0" ixz="0"/>
-  </inertial>
-  <visual>
-    <origin xyz="-0.381 0 0" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find gyrosse_description)/meshes/left_wheel.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="Black"/>
-  </visual>
-  <collision>
-    <origin xyz="-0.381 0 0" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find gyrosse_description)/meshes/left_wheel.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
+<xacro:flywheel name="flywheel_right"/>
+<xacro:flywheel name="flywheel_left"/>
 
-<joint name="left_wheel_joint" type="continuous">
-  <origin xyz="0.381 0 0" rpy="0 0 0"/>
-  <parent link="base_link"/>
-  <child link="left_wheel"/>
-  <axis xyz="1 0 0"/>
-</joint>
-
-<!-- left flywheel Link -->
-<link name="left_flywheel">
-  <inertial>
-    <origin xyz="0.008066340570656305 1.553831664279304e-16 -1.0733641945145496e-16" rpy="0 0 0"/>
-    <mass value="1.7384117767470415"/>
-    <inertia ixx="0.018431" iyy="0.009354" izz="0.009354" ixy="0" iyz="0" ixz="0"/>
-  </inertial>
-  <visual>
-    <origin xyz="-0.273 0 0" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find gyrosse_description)/meshes/left_flywheel.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-    <material name="Grey"/>
-  </visual>
-  <collision>
-    <origin xyz="-0.273 0 0" rpy="0 0 0"/>
-    <geometry>
-      <mesh filename="file://$(find gyrosse_description)/meshes/left_flywheel.stl" scale="0.001 0.001 0.001"/>
-    </geometry>
-  </collision>
-</link>
-
-<joint name="left_flywheel_joint" type="continuous">
-  <origin xyz="0.273 0 0" rpy="0 0 0"/>
-  <parent link="base_link"/>
-  <child link="left_flywheel"/>
-  <axis xyz="-1 0 0"/>
-</joint>
+<xacro:wheel name="wheel_right"/>
+<xacro:wheel name="wheel_left"/>
 
 </robot>

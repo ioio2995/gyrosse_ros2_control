@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!--chassis macro -->
+  <xacro:macro name="chassis" params="name">
+    <link name="${name}">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="8.4"/>
+      <inertia ixx="0.1235" iyy="0.173" izz="0.121" ixy="0" iyz="0.00024" ixz="0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find ${package_name})/meshes/chassis.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find ${package_name})/meshes/chassis.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+    </link>
+  </xacro:macro>
+
+<!--motor wheel macro -->
+  <xacro:macro name="motor_wheel" params="name joint_origin_xyz joint_rpy">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="-0.017 -0.06 -0.04"  rpy="0 0 0"/>
+        <mass value="1.25"/>
+        <inertia ixx="0.00215" iyy="0.001" izz="0.0016" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.145 -0.06 -0.04"  rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find ${package_name})/meshes/motor_wheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <origin xyz="0.145 -0.06 -0.04"  rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find ${package_name})/meshes/motor_wheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="joint_${name}" type="fixed">
+      <origin xyz="${joint_origin_xyz}" rpy="${joint_rpy}"/>
+      <parent link="base_link"/>
+      <child link="${name}"/>
+    </joint>
+  </xacro:macro>
+
+<!--motor flywheel macro -->
+  <xacro:macro name="motor_flywheel" params="name joint_origin_xyz joint_rpy">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="0.0158 -0.06 -0.04"  rpy="0 0 0"/>
+        <mass value="1.2"/>
+        <inertia ixx="0.0020" iyy="0.001" izz="0.0015" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.125 -0.06 -0.04"  rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find ${package_name})/meshes/motor_flywheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <origin xyz="0.125 -0.06 -0.04"  rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find ${package_name})/meshes/motor_flywheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="joint_${name}" type="fixed">
+      <origin xyz="${joint_origin_xyz}" rpy="${joint_rpy}"/>
+      <parent link="base_link"/>
+      <child link="${name}"/>
+    </joint>
+  </xacro:macro>
+
+<!-- wheel macro -->
+  <xacro:macro name="wheel" params="name">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="-0.049 0 0" rpy="0 0 0"/>
+        <mass value="1.2"/>
+        <inertia ixx="0.042" iyy="0.021" izz="0.021" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.1905 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find ${package_name})/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0.1905 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find ${package_name})/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="joint_${name}" type="continuous">
+      <origin xyz="-0.0455 -0.06 -0.04" rpy="0 0 0"/>
+      <parent link="motor_${name}"/>
+      <child link="${name}"/>
+      <axis xyz="1.0 0 0"/>
+    </joint>
+  </xacro:macro>
+
+<!-- flywheel macro -->
+  <xacro:macro name="flywheel" params="name">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="-0.008 0 0" rpy="0 0 0"/>
+        <mass value="1.8"/>
+        <inertia ixx="0.0185" iyy="0.01" izz="0.01" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0.0825 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find ${package_name})/meshes/flywheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="orange"/>
+      </visual>
+      <collision>
+        <origin xyz="0.0825 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find ${package_name})/meshes/flywheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="joint_${name}" type="continuous">
+      <origin xyz="0.0425 -0.06 -0.04" rpy="0 0 0"/>
+      <parent link="motor_${name}"/>
+      <child link="${name}"/>
+      <axis xyz="1.0 0 0"/>
+    </joint>
+  </xacro:macro>
+</robot>

@@ -1,43 +1,30 @@
-<?xml version="1.0" ?>
-<robot name="gyrosse" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+<?xml version="1.0" ?> 
+<robot name="gyrosse" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<xacro:property name="package_name" value="gyrosse_description"/>
 
-<xacro:property name="body_color" value="Gazebo/Silver" />
+<xacro:include filename="$(find ${package_name})/urdf/include/gazebo_macros.xacro" />
 
-<gazebo reference="base_link">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>true</self_collide>
-  <gravity>true</gravity>
-</gazebo>
+<xacro:gazebo_default name="base_link"
+            color="Gazebo/Silver"/>
 
-<gazebo reference="right_wheel">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>true</self_collide>
-</gazebo>
+<xacro:gazebo_default name="motor_wheel_right" 
+            color="Gazebo/Black"/>
+<xacro:gazebo_default name="motor_wheel_left" 
+            color="Gazebo/Black"/>
 
-<gazebo reference="right_flywheel">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  
-  <self_collide>true</self_collide>
-</gazebo>
+<xacro:gazebo_default name="motor_flywheel_right"
+            color="Gazebo/Black"/>
+<xacro:gazebo_default name="motor_flywheel_left" 
+            color="Gazebo/Black"/>
 
-<gazebo reference="left_wheel">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>true</self_collide>
-</gazebo>
+<xacro:gazebo_default name="flywheel_right"
+            color="Gazebo/Orange"/>
+<xacro:gazebo_default name="flywheel_left"
+            color="Gazebo/Orange"/>
 
-<gazebo reference="left_flywheel">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <self_collide>true</self_collide>
-</gazebo>
+<xacro:gazebo_default name="wheel_right"
+            color="Gazebo/Grey"/>
+<xacro:gazebo_default name="wheel_left"
+            color="Gazebo/Grey"/>
 
 </robot>

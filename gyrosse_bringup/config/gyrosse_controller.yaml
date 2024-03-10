@@ -12,8 +12,8 @@ controller_manager:
 gyrosse_controller:
   ros__parameters:
     # Model
-    left_wheel_names: ["left_wheel"]
-    right_wheel_names: ["right_wheel"]
+    left_wheel_names: ["joint_wheel_left"]
+    right_wheel_names: ["joint_wheel_right"]
 
     wheel_radius: 0.25 # Radius of front wheel
     wheel_separation: 0.47
