@@ -1,0 +1,26 @@
+<?xml version="1.0" ?> 
+<robot name="gyrosse" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find ${package_name})/urdf/include/common_macros.xacro" />
+
+<xacro:chassis name="base_link"/>
+
+<xacro:motor_wheel name="motor_wheel_right" 
+                   joint_origin_xyz="-0.145 0.06 0.04" joint_rpy="0 0 0"/>
+
+<xacro:motor_wheel name="motor_wheel_left" 
+                   joint_origin_xyz="0.145 0.06 -0.04" joint_rpy="0 ${pi} 0"/>
+
+<xacro:motor_flywheel name="motor_flywheel_right"
+                      joint_origin_xyz="-0.125 0.06 0.04" joint_rpy="0 0 0"/>
+
+<xacro:motor_flywheel name="motor_flywheel_left" 
+                      joint_origin_xyz="0.125 0.06 -0.04" joint_rpy="0 ${pi} 0"/>
+
+<xacro:flywheel name="flywheel_right"/>
+<xacro:flywheel name="flywheel_left"/>
+
+<xacro:wheel name="wheel_right"/>
+<xacro:wheel name="wheel_left"/>
+
+</robot>

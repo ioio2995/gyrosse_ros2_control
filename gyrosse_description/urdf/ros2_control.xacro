@@ -1,80 +1,107 @@
 <?xml version="1.0" ?>
-<robot name="gyrosse" xmlns:xacro="http://www.ros.org/wiki/xacro" >
-<ros2_control name="gyrosse_ros2_control" type="system">
-    <hardware>
-      <plugin>myactuator_hardware_interface/MyActuatorHardwareInterface</plugin>
-    </hardware>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
 
-    <joint name="joint_flywheel_right">
-          <param name="ifname">can0</param>
-          <param name="can_id">1</param>
-          <param name="timeout">0.1</param>
-          <param name="position_acceleration">200000</param>
-          <param name="position_deceleration">200000</param>
-          <param name="velocity_acceleration">200000</param>
-          <param name="velocity_deceleration">200000</param>
-          <param name="kp_current">50</param>
-          <param name="ki_current">50</param>
-          <param name="kp_speed">100</param>
-          <param name="ki_speed">5</param>
-          <param name="kp_position">100</param>
-          <param name="ki_position">0</param>
-    </joint>
 
-    <joint name="joint_flywheel_left">
-          <param name="ifname">can0</param>
-          <param name="can_id">2</param>
-          <param name="timeout">0.1</param>
-          <param name="position_acceleration">200000</param>
-          <param name="position_deceleration">200000</param>
-          <param name="velocity_acceleration">200000</param>
-          <param name="velocity_deceleration">200000</param>
-          <param name="kp_current">50</param>
-          <param name="ki_current">50</param>
-          <param name="kp_speed">100</param>
-          <param name="ki_speed">5</param>
-          <param name="kp_position">100</param>
-          <param name="ki_position">0</param>
-    </joint>
-
+  <xacro:macro name="ros2_control" params="
+    ifname_can
+    use_fake_hardware:=false
+    fake_sensor_commands:=false
+    ">
+      <ros2_control name="gyrosse_ros2_control" type="system">
+        <hardware>
+          <xacro:if value="${use_fake_hardware}">
+            <plugin>mock_components/GenericSystem</plugin>
+            <param name="mock_sensor_commands">${fake_sensor_commands}</param>
+            <param name="state_following_offset">0.0</param>
+          </xacro:if>
+          <xacro:unless value="${use_fake_hardware}">
+            <plugin>myactuator_hardware_interface/MyActuatorHardwareInterface</plugin>
+            <param name="ifname">${ifname_can}</param>
+          </xacro:unless>
+        </hardware>
 <joint name="joint_wheel_right">
-          <param name="ifname">can0</param>
-          <param name="can_id">3</param>
-          <param name="timeout">0.1</param>
-          <param name="position_acceleration">200000</param>
-          <param name="position_deceleration">200000</param>
-          <param name="velocity_acceleration">200000</param>
-          <param name="velocity_deceleration">200000</param>
-          <param name="kp_current">50</param>
-          <param name="ki_current">50</param>
-          <param name="kp_speed">100</param>
-          <param name="ki_speed">5</param>
-          <param name="kp_position">100</param>
-          <param name="ki_position">0</param>
+              <param name="can_id">1</param>
+              <param name="timeout">1000</param>
+              <param name="reducer_ratio">6.2/1</param>
+              <param name="speed_constant">30</param>
+              <param name="torque_constant">0.29</param>
+              <param name="rotor_inertia">3400</param>
+              <param name="position_acceleration">20000</param>
+              <param name="position_deceleration">20000</param>
+              <param name="velocity_acceleration">20000</param>
+              <param name="velocity_deceleration">20000</param>
+              <param name="kp_current">50</param>
+              <param name="ki_current">50</param>
+              <param name="kp_speed">100</param>
+              <param name="ki_speed">5</param>
+              <param name="kp_position">100</param>
+              <param name="ki_position">0</param>
+        </joint>
 
-    </joint>
+        <joint name="joint_wheel_left">
+              <param name="can_id">2</param>
+              <param name="timeout">1000</param>
+              <param name="reducer_ratio">6.2/1</param>
+              <param name="speed_constant">30</param>
+              <param name="torque_constant">0.29</param>
+              <param name="rotor_inertia">3400</param>
+              <param name="position_acceleration">20000</param>
+              <param name="position_deceleration">20000</param>
+              <param name="velocity_acceleration">20000</param>
+              <param name="velocity_deceleration">20000</param>
+              <param name="kp_current">50</param>
+              <param name="ki_current">50</param>
+              <param name="kp_speed">100</param>
+              <param name="ki_speed">5</param>
+              <param name="kp_position">100</param>
+              <param name="ki_position">0</param>
+        </joint>
+<!--
+        <joint name="joint_flywheel_right">
+              <param name="can_id">1</param>
+              <param name="timeout">1000</param>
+              <param name="reducer_ratio">9/1</param>
+              <param name="speed_constant">30</param>
+              <param name="torque_constant">0.29</param>
+              <param name="rotor_inertia">3400</param>
+              <param name="position_acceleration">20000</param>
+              <param name="position_deceleration">20000</param>
+              <param name="velocity_acceleration">20000</param>
+              <param name="velocity_deceleration">20000</param>
+              <param name="kp_current">50</param>
+              <param name="ki_current">50</param>
+              <param name="kp_speed">100</param>
+              <param name="ki_speed">5</param>
+              <param name="kp_position">100</param>
+              <param name="ki_position">0</param>
+        </joint>
 
-    <joint name="joint_wheel_left">
-          <param name="ifname">can0</param>
-          <param name="can_id">4</param>
-          <param name="timeout">0.1</param>
-          <param name="position_acceleration">200000</param>
-          <param name="position_deceleration">200000</param>
-          <param name="velocity_acceleration">200000</param>
-          <param name="velocity_deceleration">200000</param>
-          <param name="kp_current">50</param>
-          <param name="ki_current">50</param>
-          <param name="kp_speed">100</param>
-          <param name="ki_speed">5</param>
-          <param name="kp_position">100</param>
-          <param name="ki_position">0</param>
-    </joint>
-  </ros2_control>
+        <joint name="joint_flywheel_left">
+              <param name="can_id">2</param>
+              <param name="timeout">1000</param>
+              <param name="reducer_ratio">9/1</param>
+              <param name="speed_constant">30</param>
+              <param name="torque_constant">0.29</param>
+              <param name="rotor_inertia">3400</param>
+              <param name="position_acceleration">20000</param>
+              <param name="position_deceleration">20000</param>
+              <param name="velocity_acceleration">20000</param>
+              <param name="velocity_deceleration">20000</param>
+              <param name="kp_current">50</param>
+              <param name="ki_current">50</param>
+              <param name="kp_speed">100</param>
+              <param name="ki_speed">5</param>
+              <param name="kp_position">100</param>
+              <param name="ki_position">0</param>
+        </joint>
+-->
+  
+      </ros2_control>
 
-  <gazebo>
-    <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-      <parameters>$(find gyrosse_bringup)/config/gyrosse_controller.yaml</parameters>
-    </plugin>
-  </gazebo>
-
+      <gazebo>
+        <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+          <parameters>$(find gyrosse_bringup)/config/gyrosse_controller.yaml</parameters>
+        </plugin>
+      </gazebo>
+    </xacro:macro>
 </robot>

@@ -9,7 +9,7 @@ controller_manager:
     gyrosse_base_controller:
       type: diff_drive_controller/DiffDriveController
 
-gyrosse_controller:
+gyrosse_base_controller:
   ros__parameters:
     # Model
     left_wheel_names: ["joint_wheel_left"]
@@ -34,7 +34,7 @@ gyrosse_controller:
     # velocity_rolling_window_size: 10 # Rolling window size of rcppmath::RollingMeanAccumulator applied on linear and angular speeds published on odom
 
     # cmd_vel input
-    cmd_vel_timeout: 500 # In milliseconds. Timeout to stop if no cmd_vel is received
+    cmd_vel_timeout: 500.0 # In milliseconds. Timeout to stop if no cmd_vel is received
     use_stamped_vel: false # Set to True if using TwistStamped.
 
      # Velocity and acceleration limits

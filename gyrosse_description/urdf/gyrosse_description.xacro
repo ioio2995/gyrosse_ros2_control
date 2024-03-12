@@ -1,31 +1,23 @@
-<?xml version="1.0" ?> 
-<robot name="gyrosse" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<?xml version="1.0" encoding="utf-8"?>
 
-<xacro:property name="package_name" value="gyrosse_description"/>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="gyrosse">
+  <xacro:property name="package_name" value="gyrosse_description"/>
+  
+  <!-- Enable setting arguments from the launch file -->
+  <xacro:arg name="name" default="gyrosse"/>
 
-<xacro:include filename="$(find ${package_name})/urdf/include/common_macros.xacro" />
-<xacro:include filename="$(find ${package_name})/urdf/include/materials.xacro" />
-<xacro:include filename="$(find ${package_name})/urdf/gazebo.xacro" />
-<xacro:include filename="$(find ${package_name})/urdf/ros2_control.xacro" />
+  <!-- import main macro -->
+  <xacro:include filename="$(find ${package_name})/urdf/include/gyrosse_macro.xacro"/>
 
-<xacro:chassis name="base_link"/>
-
-<xacro:motor_wheel name="motor_wheel_right" 
-                   joint_origin_xyz="-0.145 0.06 0.04" joint_rpy="0 0 0"/>
-
-<xacro:motor_wheel name="motor_wheel_left" 
-                   joint_origin_xyz="0.145 0.06 -0.04" joint_rpy="0 ${pi} 0"/>
-
-<xacro:motor_flywheel name="motor_flywheel_right"
-                      joint_origin_xyz="-0.125 0.06 0.04" joint_rpy="0 0 0"/>
-
-<xacro:motor_flywheel name="motor_flywheel_left" 
-                      joint_origin_xyz="0.125 0.06 -0.04" joint_rpy="0 ${pi} 0"/>
-
-<xacro:flywheel name="flywheel_right"/>
-<xacro:flywheel name="flywheel_left"/>
-
-<xacro:wheel name="wheel_right"/>
-<xacro:wheel name="wheel_left"/>
+  <!-- parameters -->
+  <xacro:arg name="ifname_can" default="can0" />
+  <xacro:arg name="use_fake_hardware" default="false" />
+  <xacro:arg name="fake_sensor_commands" default="false" />
+ 
+  <xacro:gyrosse_robot 
+    ifname_can="$(arg ifname_can)" 
+    use_fake_hardware="$(arg use_fake_hardware)" 
+    fake_sensor_commands="$(arg fake_sensor_commands)">
+  </xacro:gyrosse_robot>
 
 </robot>
