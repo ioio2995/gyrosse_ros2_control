@@ -1,0 +1,150 @@
+<?xml version="1.0" ?> 
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!--chassis macro -->
+  <xacro:macro name="chassis" params="name">
+    <link name="${name}">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="8.4"/>
+      <inertia ixx="0.121" iyy="0.1235" izz="0.173" ixy="0" iyz="0" ixz="0.00024"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find gyrosse_description)/meshes/chassis.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="file://$(find gyrosse_description)/meshes/chassis.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+    </link>
+    <joint name="${name}_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="base_link"/>
+      <child link="${name}"/>
+    </joint>
+  </xacro:macro>
+
+<!--motor wheel macro -->
+  <xacro:macro name="motor_wheel" params="name joint_origin_xyz joint_rpy">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="0 -0.017 0"  rpy="0 0 0"/>
+        <mass value="1.25"/>
+        <inertia ixx="0.00161" iyy="0.00215" izz="0.00105" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0"  rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find gyrosse_description)/meshes/motor_wheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0"  rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find gyrosse_description)/meshes/motor_wheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${name}_joint" type="fixed">
+      <origin xyz="${joint_origin_xyz}" rpy="${joint_rpy}"/>
+      <parent link="base_link"/>
+      <child link="${name}"/>
+    </joint>
+  </xacro:macro>
+
+<!--motor flywheel macro -->
+  <xacro:macro name="motor_flywheel" params="name joint_origin_xyz joint_rpy">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="0 -0.016 0"  rpy="0 0 0"/>
+        <mass value="1.2"/>
+        <inertia ixx="0.001528" iyy="0.002077" izz="0.000977" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0"  rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find gyrosse_description)/meshes/motor_flywheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="black"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0"  rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find gyrosse_description)/meshes/motor_flywheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${name}_joint" type="fixed">
+      <origin xyz="${joint_origin_xyz}" rpy="${joint_rpy}"/>
+      <parent link="base_link"/>
+      <child link="${name}"/>
+    </joint>
+  </xacro:macro>
+
+<!-- wheel macro -->
+  <xacro:macro name="wheel" params="name joint_origin_xyz joint_rpy">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="0 0.05 0" rpy="0 0 0"/>
+        <mass value="1.2"/>
+        <inertia ixx="0.021235" iyy="0.041938" izz="0.021235" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find gyrosse_description)/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find gyrosse_description)/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${name}_joint" type="continuous">
+      <origin xyz="${joint_origin_xyz}" rpy="${joint_rpy}"/>
+      <parent link="base_link"/>
+      <child link="${name}"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+  </xacro:macro>
+
+<!-- flywheel macro -->
+  <xacro:macro name="flywheel" params="name joint_origin_xyz joint_rpy">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="0 -0.008 0" rpy="0 0 0"/>
+        <mass value="1.8"/>
+        <inertia ixx="0.009354" iyy="0.018431" izz="0.009354" ixy="0" iyz="0" ixz="0"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find gyrosse_description)/meshes/flywheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="orange"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="file://$(find gyrosse_description)/meshes/flywheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${name}_joint" type="continuous">
+      <origin xyz="${joint_origin_xyz}" rpy="${joint_rpy}"/>
+      <parent link="base_link"/>
+      <child link="${name}"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+  </xacro:macro>
+</robot>

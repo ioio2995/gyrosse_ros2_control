@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="gyrosse_urdf">
+  
+    <!-- parameters -->
+  <xacro:arg name="name" default="gyrosse" />
+  <xacro:arg name="prefix" default="" />
+  <xacro:arg name="ifname" default="can0" />
+
+
+ <!-- Import Rviz colors -->
+    <xacro:include filename="$(find gyrosse_description)/urdf/materials.xacro" />
+
+    <!-- Import Gyrosse Macro -->
+    <xacro:include filename="$(find gyrosse_description)/urdf/gyrosse.joints_links.xacro" />
+
+    <!-- Import Gyrosse ros2_control description -->
+    <xacro:include filename="$(find gyrosse_description)/urdf/gyrosse.ros2_control.xacro"/>
+
+    <link name="base_link"/>
+    <!-- Geometry Gyrosse description -->
+    <xacro:chassis name="$(arg prefix)chassis"/>
+
+    <xacro:motor_wheel name="$(arg prefix)motor_wheel_right" 
+                joint_origin_xyz="0 -0.1905 0"
+                joint_rpy="0 0 ${pi} "/>
+
+
+    <xacro:motor_wheel name="$(arg prefix)motor_wheel_left" 
+                joint_origin_xyz="0 0.1905 0" 
+                joint_rpy="0 0 0"/>
+
+    <xacro:wheel name="$(arg prefix)right_wheel"
+                joint_origin_xyz="0 -0.1905  0" 
+                joint_rpy="0 0 ${pi}"/>
+
+
+    <xacro:wheel name="$(arg prefix)left_wheel"
+                joint_origin_xyz="0 0.1905 0" 
+                joint_rpy="0 0 0"/>
+
+    <xacro:motor_flywheel name="$(arg prefix)motor_flywheel_right"
+                    joint_origin_xyz="0 -0.0825 0" 
+                    joint_rpy="0 0 0"/>
+
+    <xacro:motor_flywheel name="$(arg prefix)motor_flywheel_left" 
+                    joint_origin_xyz="0 0.0825 0 " 
+                    joint_rpy="0 0 ${pi}"/>
+
+    <xacro:flywheel name="$(arg prefix)flywheel_right"
+                joint_origin_xyz="0 -0.0825  0" 
+                joint_rpy="0 0 0"/>
+
+    <xacro:flywheel name="$(arg prefix)flywheel_left"
+                joint_origin_xyz="0 0.0825  0" 
+                joint_rpy="0 0 ${pi}"/>
+
+
+    <xacro:ros2_control name="$(arg name)" 
+                prefix="$(arg prefix)" 
+                ifname="$(arg ifname)"/>
+ 
+
+</robot>

@@ -21,7 +21,7 @@
             color="Gazebo/Orange"/>
 <xacro:gazebo_default name="flywheel_left"
             color="Gazebo/Orange"/>
-
+            
 <xacro:gazebo_default name="wheel_right"
             color="Gazebo/Grey"/>
 <xacro:gazebo_default name="wheel_left"
