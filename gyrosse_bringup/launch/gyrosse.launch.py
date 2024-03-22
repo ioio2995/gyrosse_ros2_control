@@ -90,9 +90,7 @@ def generate_launch_description():
         executable="robot_state_publisher",
         output="both",
         parameters=[robot_description],
-        remappings=[
-            ("/diff_drive_controller/cmd_vel_unstamped", "/cmd_vel"),
-        ],
+
     )
     rviz_node = Node(
         package="rviz2",
@@ -109,10 +107,16 @@ def generate_launch_description():
         arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager"],
     )
 
-    robot_controller_spawner = Node(
+    wheel_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["gyrosse_base_controller", "--controller-manager", "/controller_manager"],
+        arguments=["wheel_base_controller", "--controller-manager", "/controller_manager"],
+    )
+
+    flywheel_controller_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["flywheel_base_controller", "--controller-manager", "/controller_manager"],
     )
     
     joy_node = Node(
@@ -124,15 +128,27 @@ def generate_launch_description():
             "autorepeat_rate": 30.0
         }],
     )
-    teleop_twist_joy_node = Node(
+
+    teleop_twist_wheel_joy_node = Node(
         package="teleop_twist_joy",
         executable="teleop_node",
-        name="teleop_twist_joy_node",
+        name="teleop_twist_wheel_joy_node",
         parameters=[joy_config_file],
         remappings=[
-            ("/cmd_vel", "/gyrosse_base_controller/cmd_vel_unstamped"),
+            ("/cmd_vel", "/wheel_base_controller/cmd_vel_unstamped"),
         ]
-    )
+    ) 
+
+    teleop_twist_flywheel_joy_node = Node(
+        package="teleop_twist_joy",
+        executable="teleop_node",
+        name="teleop_twist_flywheel_joy_node",
+        parameters=[joy_config_file],
+        remappings=[
+            ("/cmd_vel", "/flywheel_base_controller/cmd_vel_unstamped"),
+        ]
+    ) 
+  
 
     # Delay rviz start after `joint_state_broadcaster`
     delay_rviz_after_joint_state_broadcaster_spawner = RegisterEventHandler(
@@ -146,7 +162,7 @@ def generate_launch_description():
     delay_robot_controller_spawner_after_joint_state_broadcaster_spawner = RegisterEventHandler(
         event_handler=OnProcessExit(
             target_action=joint_state_broadcaster_spawner,
-            on_exit=[robot_controller_spawner],
+            on_exit=[wheel_controller_spawner, flywheel_controller_spawner],
         )
     )
 
@@ -155,7 +171,8 @@ def generate_launch_description():
         robot_state_pub_node,
         joint_state_broadcaster_spawner,
         joy_node,
-        teleop_twist_joy_node,
+        teleop_twist_wheel_joy_node,
+        teleop_twist_flywheel_joy_node,
         delay_rviz_after_joint_state_broadcaster_spawner,
         delay_robot_controller_spawner_after_joint_state_broadcaster_spawner,
     ]

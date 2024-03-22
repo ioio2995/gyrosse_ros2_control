@@ -7,7 +7,7 @@
             <plugin>myactuator_hardware_interface/MyActuatorHardwareInterface</plugin>
             <param name="ifname">${ifname}</param>
             <param name="timeout">1000</param>
-            <param name="max_speed">2000</param>
+            <param name="max_speed">5000</param>
         </hardware>
 
         <joint name="${prefix}left_wheel_joint">
@@ -45,11 +45,11 @@
               <param name="kp_position">100</param>
               <param name="ki_position">0.0</param>
         </joint>
-<!--
-        <joint name="joint_flywheel_right">
-              <param name="can_id">1</param>
+
+        <joint name="${prefix}left_flywheel_joint">
+              <param name="can_id">3</param>
               <param name="timeout">1000</param>
-              <param name="reducer_ratio">9/1</param>
+              <param name="reducer_ratio">9</param>
               <param name="speed_constant">30</param>
               <param name="torque_constant">0.29</param>
               <param name="rotor_inertia">3400</param>
@@ -65,10 +65,10 @@
               <param name="ki_position">0</param>
         </joint>
 
-        <joint name="joint_flywheel_left">
-              <param name="can_id">2</param>
+        <joint name="${prefix}right_flywheel_joint">
+              <param name="can_id">4</param>
               <param name="timeout">1000</param>
-              <param name="reducer_ratio">9/1</param>
+              <param name="reducer_ratio">9</param>
               <param name="speed_constant">30</param>
               <param name="torque_constant">0.29</param>
               <param name="rotor_inertia">3400</param>
@@ -83,8 +83,7 @@
               <param name="kp_position">100</param>
               <param name="ki_position">0</param>
         </joint>
--->
-  
+
       </ros2_control>
 
       <gazebo>
